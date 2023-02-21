@@ -1,0 +1,5 @@
+KKK, kilépési feltétel (vagy én nem tudom) .pdf
+
+Adattárolás, -kezelés,
+RESTFUL Architechtúra
+Webes megvalósítás szükséges
