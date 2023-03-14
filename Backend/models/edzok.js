@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 //név, edző,
 
-const edzokSchema = new mongoose.Schema(
+const trainerSchema = new mongoose.Schema(
   {
-    nev: {
+    /*nev: {
       type: String,
     },
     idopont: {
@@ -13,9 +13,22 @@ const edzokSchema = new mongoose.Schema(
     program: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "program",
+    },*/
+
+    image: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    job: {
+      type: String,
+    },
+    socials: {
+      type: Array,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("trainer", edzokSchema);
+module.exports = mongoose.model("trainer", trainerSchema);

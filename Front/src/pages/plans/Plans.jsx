@@ -2,9 +2,36 @@ import Header from "../../components/Header";
 import HeaderImage from "../../images/header_bg_4.jpg";
 import Card from "../../UI/Card";
 import { plans } from "../../data";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import axios from 'axios';
 
 import "./plans.css";
+import { planAdd } from "../../redux/cartSlice";
+import { useEffect } from "react";
+
 const Plans = () => {
+  const dispatch = useDispatch();
+  const [tulajdonsagok, setTulajdonsagok] = useState([]);
+
+  useEffect(() => {
+    const leker = async () => {
+      try {
+        const tulaj = await axios("http://localhost:3500/feature");
+        console.log(tulaj);
+      } catch (error) {
+        console.log(error.messsage);
+      }
+    };
+
+    leker();
+  }, []);
+
+  // const kivalaszt = (e) => {
+  //   e.preventDefault();
+
+  //   dispatch(planAdd(plan));
+  // };
   return (
     <>
       <Header title="Membership Plans" image={HeaderImage}>
@@ -23,15 +50,20 @@ const Plans = () => {
                 <h4>Features</h4>
                 {
                   /* Nem Működik*/
-                  features.map(({ features, available }, index) => {
+                  features.map(({ feature, available }, index) => {
                     return (
                       <p key={index} className={!available ? "disabled" : ""}>
-                        {features}
+                        {feature}
                       </p>
                     );
                   })
                 }
-                <button className="btn lg">Choose plan</button>
+                <button
+                  className="btn lg"
+                  onClick={(e) => dispatch(planAdd(name))}
+                >
+                  Choose plan
+                </button>
               </Card>
             );
           })}

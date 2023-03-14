@@ -24,6 +24,7 @@ const Trainers = () => {
               <Trainer
                 key={id}
                 image={image}
+                name={name}
                 job={job}
                 socials={[
                   { icon: <BsInstagram />, link: socials[0] },

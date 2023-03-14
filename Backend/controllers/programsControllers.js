@@ -1,15 +1,13 @@
 const User = require("../models/edzok");
-const Trainer = require("../models/Trainer");
+const Program = require("../models/program");
 
 exports.getUser = async (req, res) => {
   try {
-    const spori = await User.findOne({ nev: "spori" });
-    console.log(spori.edzo);
-    const edzo = await Trainer.findById(spori.edzo);
-    console.log(edzo);
-    res.json({
-      /*vmi*/ spori: spori.nev,
-    });
+    const spori = await Program.find();
+    //console.log(spori);
+    // const edzo = await Trainer.findById(spori.edzo);
+    // console.log(edzo);
+    res.json({ spori });
   } catch {
     res.json({ msg: error.message });
   }
@@ -18,8 +16,8 @@ exports.getUser = async (req, res) => {
 exports.postuser = async (req, res) => {
   try {
     const adatok = req.body;
-    const newUser = new User(adatok);
-    await newUser.save();
+    const newProgram = new Program(adatok);
+    await newProgram.save();
     console.log(adatok);
     res.json({ msg: "Sportolni vágyók feltöltése" });
   } catch {

@@ -2,18 +2,17 @@ const mongoose = require("mongoose");
 
 const programSchema = new mongoose.Schema(
   {
-    nev: {
+    icon: {
       type: String,
     },
-    ar: {
-      type: Number,
+    title: {
+      type: String,
     },
-    gyakorlatok: {
-      type: Array,
+    info: {
+      type: String,
     },
-    idotartam: {
-      type: Number,
-      min: 5,
+    path: {
+      type: String,
     },
   },
   { timestamps: true }

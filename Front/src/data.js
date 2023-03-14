@@ -25,6 +25,18 @@ export const links = [
     name: "Contact",
     path: "/contact",
   },
+  {
+    name: "Cart",
+    path: "/cart",
+  },
+  {
+    name: "Login",
+    path: "/login",
+  },
+  {
+    name: "Register",
+    path: "/register",
+  },
 ];
 
 export const programs = [

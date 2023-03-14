@@ -34,7 +34,7 @@ const Testimonials = () => {
           title="Testimonials"
           className="testmonials__head"
         />
-        <Card className="testimonials">
+        <Card className="testimonial">
           <div className="testimonial__avatar">
             <img src={avatar} alt={name} />
           </div>

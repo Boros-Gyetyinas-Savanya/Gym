@@ -27,6 +27,9 @@ function about() {
               aspernatur fugit! Fugiat reprehenderit quidem unde omnis ratione
               impedit dolore temporibus voluptas!
             </p>
+            <form action="../../../Backend/post" method="post" className="form">
+              <button type="submit">Connected?</button>
+            </form>
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi
               necessitatibus neque similique sapiente sed unde illo odit iste,
