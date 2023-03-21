@@ -13,6 +13,9 @@ function Cart() {
     console.log(adatok.customer);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const nev = localStorage.getItem('nev');
+    const email = localStorage.getItem('email');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
 
     const feldolgoz = () => {
         const feltolt = async () => {
@@ -23,8 +26,8 @@ function Cart() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        nev: adatok.customer.nev,
-                        email: adatok.customer.email,
+                        nev: nev,
+                        email: email,
                         terv: adatok.plan,
                         edzo: adatok.trainer,
                     }),
@@ -49,10 +52,10 @@ function Cart() {
         <>
             <div className="cart-container">
                 <div className="nev">
-                    Ügyfél neve: <span>{adatok.customer.nev}</span>
+                    Ügyfél neve: <span>{nev}</span>
                 </div>
                 <div className="email">
-                    Ügyfél e-mail címe: <span>{adatok.customer.email}</span>
+                    Ügyfél e-mail címe: <span>{email}</span>
                 </div>
                 <div className="terv">
                     Edzésterv: <span>{adatok.plan}</span>

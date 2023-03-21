@@ -8,16 +8,23 @@ import { useSelector } from 'react-redux';
 import './navbar.css';
 
 const Navbar = () => {
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const adatok = useSelector((state) => state.kartya.value);
-    // console.log(adatok.customer);
+    console.log(adatok.customer);
 
     const [isNavShowing, setIsNavShowing] = useState(false);
     const [newLinks, setNewLinks] = useState([]);
 
     useEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        console.log(isLoggedIn);
+
+        const logged = isLoggedIn ? true : false;
+        console.log(logged);
+
         setNewLinks(
             links.map((elem) => {
-                if (adatok.customer.isLoggedIn === true) {
+                if (logged === true) {
                     if (elem.name === 'Login') {
                         elem.isLoggedIn = false;
                     }

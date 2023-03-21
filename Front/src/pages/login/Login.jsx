@@ -40,6 +40,9 @@ const Login = () => {
                     navigate('/');
                     // console.log(res);
                     window.alert('Sikeres bejelentkezés!');
+                    if (nev === 'admin') {
+                        window.location.replace('http://localhost:3500/');
+                    }
                 } else {
                     window.alert(res.msg);
                 }
