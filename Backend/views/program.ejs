@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Programok</title>
+    </head>
+    <body>
+        <nav>
+            <li><a href="/">Főoldal</a></li>
+            <li><a href="/user/users">Sportolók</a></li>
+            <li><a href="/trainer/trainers">Edzők</a></li>
+            <li><a href="/program/programs">Programok</a></li>
+            <li><a href="/plan/plans">Edzéstervek</a></li>
+            <li><a href="/cart/carts">Kártyák</a></li>
+        </nav>
+        <h1>Program feltöltése</h1>
+        <form>
+            <label for="programId">Id:</label>
+            <input type="number" name="programId" id="programId" /><br />
+            <label for="icon">Icon:</label>
+            <input type="text" name="icon" id="icon" /><br />
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" /><br />
+            <label for="info">Info:</label>
+            <input type="text" name="info" id="info" /><br />
+            <label for="path">Path:</label>
+            <input type="text" name="path" id="path" /><br />
+            <button type="submit" onclick="programFeltolt()">Feldolgoz</button>
+        </form>
+        <form id="form-modosit" style="display: none">
+            <h1>Program Módosítása</h1>
+            <label for="mprogramId">Id:</label>
+            <input type="number" name="mprogramId" id="mprogramId" /><br />
+            <label for="micon">Icon:</label>
+            <input type="text" name="micon" id="micon" /><br />
+            <label for="mtitle">Title:</label>
+            <input type="text" name="mtitle" id="mtitle" /><br />
+            <label for="minfo">Info:</label>
+            <input type="text" name="minfo" id="minfo" /><br />
+            <label for="mpath">Path:</label>
+            <input type="text" name="mpath" id="mpath" /><br />
+            <button type="submit" onclick="programModosit()">Feldolgoz</button>
+        </form>
+        <h1>Programok</h1>
+        <ul>
+            <% programs.forEach(element => { %>
+            <li>
+                <p><%= element.id %></p>
+                <p><%= element.icon %></p>
+                <p><%= element.title %></p>
+                <p><%= element.info %></p>
+                <p><%= element.path %></p>
+                <button onclick="torol('<%= element._id %>')">Töröl</button>
+                <button onclick="modosit('<%= element._id %>')">Módosít</button>
+            </li>
+            <% }) %>
+        </ul>
+        <script>
+            let programFeltolt = async () => {
+                try {
+                    let programId = document.getElementById('programId').value;
+                    let icon = document.getElementById('icon').value;
+                    let title = document.getElementById('title').value;
+                    let info = document.getElementById('info').value;
+                    let path = document.getElementById('path').value;
+
+                    const response = await fetch('/program', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: programId,
+                            icon: icon,
+                            title: title,
+                            info: info,
+                            path: path,
+                        }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let torol = async (id) => {
+                try {
+                    const response = await fetch('/program/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ id }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let modosit = (id) => {
+                try {
+                    let formModosit = document.getElementById('form-modosit');
+                    formModosit.style.display = 'block';
+
+                    const adat = '<%- JSON.stringify(programs) %>';
+                    const programs = JSON.parse(adat);
+                    console.log(programs);
+
+                    programs.forEach((element) => {
+                        if (element._id == id) {
+                            let mprogramId =
+                                document.getElementById('mprogramId');
+                            mprogramId.value = element.id;
+                            let micon = document.getElementById('micon');
+                            micon.value = element.icon;
+                            let mtitle = document.getElementById('mtitle');
+                            mtitle.value = element.title;
+                            let minfo = document.getElementById('minfo');
+                            minfo.value = element.info;
+                            let mpath = document.getElementById('mpath');
+                            mpath.value = element.path;
+                        }
+                    });
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let programModosit = async () => {
+                try {
+                    let id = document.getElementById('mprogramId').value;
+                    let icon = document.getElementById('micon').value;
+                    let title = document.getElementById('mtitle').value;
+                    let info = document.getElementById('minfo').value;
+                    let path = document.getElementById('mpath').value;
+
+                    const response = await fetch('/program/modosit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: id,
+                            icon: icon,
+                            title: title,
+                            info: info,
+                            path: path,
+                        }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+        </script>
+    </body>
+</html>

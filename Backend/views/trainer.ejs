@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edző</title>
+    </head>
+    <body>
+        <nav>
+            <li><a href="/">Főoldal</a></li>
+            <li><a href="/user/users">Sportolók</a></li>
+            <li><a href="/trainer/trainers">Edzők</a></li>
+            <li><a href="/program/programs">Programok</a></li>
+            <li><a href="/plan/plans">Edzéstervek</a></li>
+            <li><a href="/cart/carts">Kártyák</a></li>
+        </nav>
+        <h1>Edző feltöltése</h1>
+        <form>
+            <label for="name">Név:</label>
+            <input type="text" name="name" id="name" /><br />
+            <label for="job">Munka:</label>
+            <input type="text" name="job" id="job" /><br />
+            <label for="image">Image:</label>
+            <input type="text" name="image" id="image" /><br />
+            <button type="submit" onclick="edzoFeltolt()">Feldolgoz</button>
+        </form>
+        <form form id="form-modosit" style="display: none">
+            <h1>Edző módosítása</h1>
+            <input type="hidden" name="mtrainerId" id="mtrainerId" />
+            <label for="mname">Név:</label>
+            <input type="text" name="mname" id="mname" /><br />
+            <label for="mjob">Munka:</label>
+            <input type="text" name="mjob" id="mjob" /><br />
+            <label for="mimage">Image:</label>
+            <input type="text" name="mimage" id="mimage" /><br />
+            <button type="submit" onclick="edzoModosit()">Feldolgoz</button>
+        </form>
+        <h1>Edzők</h1>
+        <ul>
+            <% spori.forEach(element => { %>
+            <li>
+                <h1><%= element.name %></h1>
+                <p><%= element.job %></p>
+                <p><%= element.image %></p>
+                <button onclick="torol('<%= element._id %>')">Töröl</button>
+                <button onclick="modosit('<%= element._id %>')">Módosít</button>
+            </li>
+            <% }) %>
+        </ul>
+        <script>
+            let torol = async (id) => {
+                try {
+                    const response = await fetch('/trainer/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ id }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let edzoFeltolt = async () => {
+                try {
+                    let name = document.getElementById('name').value;
+                    let job = document.getElementById('job').value;
+                    let image = document.getElementById('image').value;
+                    let socials = [
+                        'https://instagram.com/',
+                        'https://twitter.com/',
+                        'https://facebook.com/',
+                        'https://linkedin.com/',
+                    ];
+
+                    const response = await fetch('/trainer', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            image: image,
+                            name: name,
+                            job: job,
+                            socials: socials,
+                        }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let modosit = (id) => {
+                try {
+                    let formModosit = document.getElementById('form-modosit');
+                    formModosit.style.display = 'block';
+
+                    const adat = '<%- JSON.stringify(spori) %>';
+                    const spori = JSON.parse(adat);
+                    console.log(spori);
+
+                    spori.forEach((element) => {
+                        if (element._id == id) {
+                            let mtrainerId =
+                                document.getElementById('mtrainerId');
+                            mtrainerId.value = element._id;
+                            let mname = document.getElementById('mname');
+                            mname.value = element.name;
+                            let mjob = document.getElementById('mjob');
+                            mjob.value = element.job;
+                            let mimage = document.getElementById('mimage');
+                            mimage.value = element.image;
+                        }
+                    });
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+
+            let edzoModosit = async () => {
+                try {
+                    let id = document.getElementById('mtrainerId').value;
+                    let name = document.getElementById('mname').value;
+                    let job = document.getElementById('mjob').value;
+                    let image = document.getElementById('mimage').value;
+
+                    const response = await fetch('/trainer/modosit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: id,
+                            name: name,
+                            job: job,
+                            image: image,
+                        }),
+                    });
+
+                    const adat = await response.json();
+                    console.log(adat);
+                } catch (error) {
+                    console.log(error.message);
+                }
+            };
+        </script>
+    </body>
+</html>

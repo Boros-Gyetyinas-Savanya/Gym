@@ -4,7 +4,7 @@ const planSchema = new mongoose.Schema(
     {
         name: String,
         desc: String,
-        price: Number,
+        price: String,
         features: Array,
     },
     { timestamps: true }

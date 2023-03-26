@@ -45,6 +45,7 @@ const Login = () => {
                     }
                 } else {
                     window.alert(res.msg);
+                    navigate('/Register');
                 }
             } catch (error) {}
         };

@@ -3,7 +3,11 @@ const User = require('./user');
 
 const programSchema = new mongoose.Schema(
     {
-        id: Number,
+        id: {
+            type: Number,
+            required: true,
+            unique: true,
+        },
         icon: {
             type: String,
         },

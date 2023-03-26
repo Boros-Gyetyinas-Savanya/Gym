@@ -15,6 +15,18 @@ exports.getCart = async (req, res) => {
     }
 };
 
+exports.getAllCarts = async (req, res) => {
+    try {
+        const carts = await Cart.find()
+            .populate('user')
+            .populate('trainer')
+            .populate('plan');
+        res.render('cart', { carts });
+    } catch {
+        res.json({ msg: error.message });
+    }
+};
+
 exports.postCart = async (req, res) => {
     try {
         const { nev, email, terv, edzo } = req.body;
@@ -37,5 +49,16 @@ exports.postCart = async (req, res) => {
         res.status(200).json({ msg: 'Sikeres kártya létrehozás!' });
     } catch (error) {
         res.status(500).json({ msg: 'Valami nem stimmel az adatokkal!' });
+    }
+};
+
+exports.deleteCart = async (req, res) => {
+    try {
+        const { id } = req.body;
+        console.log(id);
+        const kartya = await Cart.findOneAndDelete({ _id: id });
+        res.json(kartya);
+    } catch (error) {
+        res.json({ msg: 'Valami hiba történt!' });
     }
 };

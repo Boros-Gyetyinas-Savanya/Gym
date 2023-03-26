@@ -11,6 +11,15 @@ exports.getUser = async (req, res) => {
     }
 };
 
+exports.getAllUsers = async (req, res) => {
+    try {
+        const spori = await User.find();
+        res.render('user', { spori });
+    } catch {
+        res.json({ msg: error.message });
+    }
+};
+
 exports.registerUser = async (req, res) => {
     try {
         const adatok = req.body;
@@ -32,7 +41,7 @@ exports.registerUser = async (req, res) => {
         console.log(adatok);
         res.status(200).json({ msg: 'Sikeres regisztráció!' });
     } catch (error) {
-        res.json({ msg: error.message });
+        res.status(500).json({ msg: error.message });
     }
 };
 
@@ -45,7 +54,7 @@ exports.loginUser = async (req, res) => {
         if (!ugyfel) {
             return res
                 .status(500)
-                .json({ message: 'Ilyen néven nincs ügyfelünk!' });
+                .json({ msg: 'Ilyen néven nincs ügyfelünk!' });
         }
 
         const osszeHasonlit = await bcrypt.compare(
@@ -63,5 +72,16 @@ exports.loginUser = async (req, res) => {
         }
     } catch (error) {
         res.json({ msg: error.message });
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const { id } = req.body;
+        console.log(id);
+        const ugyi = await User.findOneAndDelete({ _id: id });
+        res.json(ugyi);
+    } catch (error) {
+        res.json({ msg: 'Valami hiba történt!' });
     }
 };

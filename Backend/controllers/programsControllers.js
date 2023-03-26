@@ -10,12 +10,28 @@ exports.getProgram = async (req, res) => {
     }
 };
 
+exports.getAllPrograms = async (req, res) => {
+    try {
+        const programs = await Program.find().populate('user');
+        res.render('program', { programs });
+    } catch {
+        res.json({ msg: error.message });
+    }
+};
+
 exports.postProgram = async (req, res) => {
     try {
-        const adatok = req.body;
-        const newProgram = new Program(adatok);
+        const { id, icon, title, info, path } = req.body;
+        console.log({ id, icon, title, info, path });
+        const newProgram = new Program({
+            id,
+            icon,
+            title,
+            info,
+            path,
+            user: [],
+        });
         await newProgram.save();
-        console.log(adatok);
         res.status(200).json({ msg: 'Sportolni vágyók feltöltése' });
     } catch {
         res.status(500).json({ msg: error.message });
@@ -34,4 +50,29 @@ exports.putProgram = async (req, res) => {
     } catch {
         res.status(500).json({ msg: error.message });
     }
+};
+
+exports.deleteProgram = async (req, res) => {
+    try {
+        const { id } = req.body;
+        console.log(id);
+        const progi = await Program.findOneAndDelete({ _id: id });
+        res.json(progi);
+    } catch (error) {
+        res.json({ msg: 'Valami hiba történt!' });
+    }
+};
+
+exports.updateProgram = async (req, res) => {
+    const { id, icon, title, info, path } = req.body;
+
+    const progi = await Program.findOneAndUpdate(
+        { id },
+        { icon, title, info, path },
+        { new: true }
+    );
+
+    console.log(progi);
+
+    res.status(200).json(progi);
 };
