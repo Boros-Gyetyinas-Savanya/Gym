@@ -1,270 +1,276 @@
 <!DOCTYPE html>
 <html lang="hu">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Programok</title>
-    </head>
-    <body>
-        <nav>
-            <li><a href="/">Főoldal</a></li>
-            <li><a href="/user/users">Sportolók</a></li>
-            <li><a href="/trainer/trainers">Edzők</a></li>
-            <li><a href="/program/programs">Programok</a></li>
-            <li><a href="/plan/plans">Edzéstervek</a></li>
-            <li><a href="/cart/carts">Kártyák</a></li>
-        </nav>
-        <h1>Edzésterv feltöltése</h1>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" /><br />
-            <label for="description">Description:</label>
-            <input type="text" name="description" id="description" /><br />
-            <label for="price">Price:</label>
-            <input type="text" name="price" id="price" /><br />
-            <% for( let i = 0; i < 13; i++ ) { %>
-            <label for="feature_<%= i %>">Feature:</label>
-            <input
-                type="text"
-                name="feature_<%= i %>"
-                id="feature_<%= i %>"
-            /><br />
-            <label for="avaiable_<%= i %>">Available:</label>
-            <input
-                type="radio"
-                name="avaiable_<%= i %>"
-                id="avaiable_<%= i %>_true"
-                value="true"
-            />
-            <input
-                type="radio"
-                name="avaiable_<%= i %>"
-                id="avaiable_<%= i %>_false"
-                value="false"
-            /><br />
-            <% } %>
-            <button type="submit" onclick="edzestervFeltolt()">
-                Feldolgoz
-            </button>
-        </form>
-        <form id="form-modosit" style="display: none">
-            <h1>Edzésterv módosítása</h1>
-            <input type="hidden" name="mplanId" id="mplanId" />
-            <label for="mname">Name:</label>
-            <input type="text" name="mname" id="mname" /><br />
-            <label for="mdescription">Description:</label>
-            <input type="text" name="mdescription" id="mdescription" /><br />
-            <label for="mprice">Price:</label>
-            <input type="text" name="mprice" id="mprice" /><br />
-            <% for( let i = 0; i < 13; i++ ) { %>
-            <label for="mfeature_<%= i %>">Feature:</label>
-            <input
-                type="text"
-                name="mfeature_<%= i %>"
-                id="mfeature_<%= i %>"
-            /><br />
-            <label for="avaiable_<%= i %>">Available:</label>
-            <input
-                type="radio"
-                name="mavaiable_<%= i %>"
-                id="mavaiable_<%= i %>_true"
-                value="true"
-            />
-            <input
-                type="radio"
-                name="mavaiable_<%= i %>"
-                id="mavaiable_<%= i %>_false"
-                value="false"
-            /><br />
-            <% } %>
-            <button type="submit" onclick="edzestervModosit()">
-                Feldolgoz
-            </button>
-        </form>
-        <h1>Edzéstervek</h1>
-        <ul>
-            <% tulajdonsagok.forEach(element => { %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programok</title>
+  </head>
+  <style>
+    body {
+      background-color: #119999;
+    }
+    li {
+      color: #dddddd;
+      text-decoration: none;
+    }
+    a {
+      color: yellow;
+      text-decoration: none;
+    }
+  </style>
+  <body>
+    <nav>
+      <li style="position: absolute; top: 10vh; left: 10vw">
+        <a href="/">Főoldal</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 20vw">
+        <a href="/user/users">Sportolók</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 30vw">
+        <a href="/trainer/trainers">Edzők</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 40vw">
+        <a href="/program/programs">Programok</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 50vw">
+        <a href="/plan/plans">Edzéstervek</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 60vw">
+        <a href="/cart/carts">Kártyák</a>
+      </li>
+    </nav>
+    <div style="position: relative; top: 10vh">
+      <h1>Edzésterv feltöltése</h1>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" /><br />
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" /><br />
+        <label for="price">Price:</label>
+        <input type="text" name="price" id="price" /><br />
+        <% for( let i = 0; i < 13; i++ ) { %>
+        <label for="feature_<%= i %>">Feature:</label>
+        <input
+          type="text"
+          name="feature_<%= i %>"
+          id="feature_<%= i %>"
+        /><br />
+        <label for="avaiable_<%= i %>">Available:</label>
+        <input
+          type="radio"
+          name="avaiable_<%= i %>"
+          id="avaiable_<%= i %>_true"
+          value="true"
+        />
+        <input
+          type="radio"
+          name="avaiable_<%= i %>"
+          id="avaiable_<%= i %>_false"
+          value="false"
+        /><br />
+        <% } %>
+        <button type="submit" onclick="edzestervFeltolt()">Feldolgoz</button>
+      </form>
+      <form id="form-modosit" style="display: none">
+        <h1>Edzésterv módosítása</h1>
+        <input type="hidden" name="mplanId" id="mplanId" />
+        <label for="mname">Name:</label>
+        <input type="text" name="mname" id="mname" /><br />
+        <label for="mdescription">Description:</label>
+        <input type="text" name="mdescription" id="mdescription" /><br />
+        <label for="mprice">Price:</label>
+        <input type="text" name="mprice" id="mprice" /><br />
+        <% for( let i = 0; i < 13; i++ ) { %>
+        <label for="mfeature_<%= i %>">Feature:</label>
+        <input
+          type="text"
+          name="mfeature_<%= i %>"
+          id="mfeature_<%= i %>"
+        /><br />
+        <label for="avaiable_<%= i %>">Available:</label>
+        <input
+          type="radio"
+          name="mavaiable_<%= i %>"
+          id="mavaiable_<%= i %>_true"
+          value="true"
+        />
+        <input
+          type="radio"
+          name="mavaiable_<%= i %>"
+          id="mavaiable_<%= i %>_false"
+          value="false"
+        /><br />
+        <% } %>
+        <button type="submit" onclick="edzestervModosit()">Feldolgoz</button>
+      </form>
+      <h1>Edzéstervek</h1>
+      <ul>
+        <% tulajdonsagok.forEach(element => { %>
+        <li>
+          <p><%= element.name %></p>
+          <p><%= element.desc %></p>
+          <p><%= element.price %></p>
+          <ul>
+            <% for( let i = 0; i < element.features.length; i++ ) { %>
             <li>
-                <p><%= element.name %></p>
-                <p><%= element.desc %></p>
-                <p><%= element.price %></p>
-                <ul>
-                    <% for( let i = 0; i < element.features.length; i++ ) { %>
-                    <li>
-                        <%= element.features[i].feature %> - <%=
-                        element.features[i].avaiable %>
-                    </li>
-                    <% } %>
-                </ul>
-                <button onclick="torol('<%= element._id %>')">Töröl</button>
-                <button onclick="modosit('<%= element._id %>')">Módosít</button>
+              <%= element.features[i].feature %> - <%=
+              element.features[i].avaiable %>
             </li>
-            <% }) %>
-        </ul>
-        <script>
-            let edzestervFeltolt = async () => {
-                try {
-                    let name = document.getElementById('name').value;
-                    // console.log(name);
-                    let desc = document.getElementById('description').value;
-                    // console.log(desc);
-                    let price = document.getElementById('price').value;
-                    // console.log(price);
-                    let features = [];
+            <% } %>
+          </ul>
+          <button onclick="torol('<%= element._id %>')">Töröl</button>
+          <button onclick="modosit('<%= element._id %>')">Módosít</button>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+    <script>
+      let edzestervFeltolt = async () => {
+        try {
+          let name = document.getElementById("name").value;
+          // console.log(name);
+          let desc = document.getElementById("description").value;
+          // console.log(desc);
+          let price = document.getElementById("price").value;
+          // console.log(price);
+          let features = [];
 
-                    for (let i = 0; i < 13; i++) {
-                        let feature = document.getElementById(
-                            `feature_${i}`
-                        ).value;
-                        let eldont = true;
-                        let igaz = document.getElementById(
-                            `avaiable_${i}_true`
-                        );
-                        if (igaz.checked) {
-                            eldont = true;
-                        }
-                        let hamis = document.getElementById(
-                            `avaiable_${i}_false`
-                        );
-                        if (hamis.checked) {
-                            eldont = false;
-                        }
-                        // console.log(eldont);
-                        features.push({ feature, avaiable: eldont });
-                    }
+          for (let i = 0; i < 13; i++) {
+            let feature = document.getElementById(`feature_${i}`).value;
+            let eldont = true;
+            let igaz = document.getElementById(`avaiable_${i}_true`);
+            if (igaz.checked) {
+              eldont = true;
+            }
+            let hamis = document.getElementById(`avaiable_${i}_false`);
+            if (hamis.checked) {
+              eldont = false;
+            }
+            // console.log(eldont);
+            features.push({ feature, avaiable: eldont });
+          }
 
-                    const response = await fetch('/plan', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: name,
-                            desc: desc,
-                            price: price,
-                            features: features,
-                        }),
-                    });
+          const response = await fetch("/plan", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: name,
+              desc: desc,
+              price: price,
+              features: features,
+            }),
+          });
 
-                    const adat = await response.json();
-                    console.log(adat);
-                } catch (error) {
-                    console.log(error.message);
+          const adat = await response.json();
+          console.log(adat);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
+      let torol = async (id) => {
+        try {
+          const response = await fetch("/plan/delete", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          });
+
+          const adat = await response.json();
+          console.log(adat);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
+      let modosit = (id) => {
+        try {
+          let formModosit = document.getElementById("form-modosit");
+          formModosit.style.display = "block";
+
+          const adat = "<%- JSON.stringify(tulajdonsagok) %>";
+          const tulajdonsagok = JSON.parse(adat);
+          // console.log(tulajdonsagok);
+
+          tulajdonsagok.forEach((element) => {
+            if (element._id == id) {
+              let mplanId = document.getElementById("mplanId");
+              mplanId.value = element._id;
+              let mname = document.getElementById("mname");
+              mname.value = element.name;
+              let mdescription = document.getElementById("mdescription");
+              mdescription.value = element.desc;
+              let mprice = document.getElementById("mprice");
+              mprice.value = element.price;
+              for (let i = 0; i < element.features.length; i++) {
+                let mfeature = document.getElementById(`mfeature_${i}`);
+                mfeature.value = element.features[i].feature;
+                if (element.features[i].avaiable === true) {
+                  let mavaiable_true = document.getElementById(
+                    `mavaiable_${i}_true`
+                  );
+                  mavaiable_true.checked = true;
+                } else {
+                  let mavaiable_false = document.getElementById(
+                    `mavaiable_${i}_false`
+                  );
+                  mavaiable_false.checked = true;
                 }
-            };
+              }
+            }
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
 
-            let torol = async (id) => {
-                try {
-                    const response = await fetch('/plan/delete', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ id }),
-                    });
+      let edzestervModosit = async () => {
+        try {
+          let id = document.getElementById("mplanId").value;
+          let name = document.getElementById("mname").value;
+          let desc = document.getElementById("mdescription").value;
+          let price = document.getElementById("mprice").value;
+          let features = [];
 
-                    const adat = await response.json();
-                    console.log(adat);
-                } catch (error) {
-                    console.log(error.message);
-                }
-            };
+          for (let i = 0; i < 13; i++) {
+            let feature = document.getElementById(`mfeature_${i}`).value;
+            let eldont = true;
+            let igaz = document.getElementById(`mavaiable_${i}_true`);
+            if (igaz.checked) {
+              eldont = true;
+            }
+            let hamis = document.getElementById(`mavaiable_${i}_false`);
+            if (hamis.checked) {
+              eldont = false;
+            }
+            // console.log(eldont);
+            features.push({ feature, avaiable: eldont });
+          }
 
-            let modosit = (id) => {
-                try {
-                    let formModosit = document.getElementById('form-modosit');
-                    formModosit.style.display = 'block';
+          const response = await fetch("/plan/modosit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: id,
+              name: name,
+              desc: desc,
+              price: price,
+              features: features,
+            }),
+          });
 
-                    const adat = '<%- JSON.stringify(tulajdonsagok) %>';
-                    const tulajdonsagok = JSON.parse(adat);
-                    // console.log(tulajdonsagok);
-
-                    tulajdonsagok.forEach((element) => {
-                        if (element._id == id) {
-                            let mplanId = document.getElementById('mplanId');
-                            mplanId.value = element._id;
-                            let mname = document.getElementById('mname');
-                            mname.value = element.name;
-                            let mdescription =
-                                document.getElementById('mdescription');
-                            mdescription.value = element.desc;
-                            let mprice = document.getElementById('mprice');
-                            mprice.value = element.price;
-                            for (let i = 0; i < element.features.length; i++) {
-                                let mfeature = document.getElementById(
-                                    `mfeature_${i}`
-                                );
-                                mfeature.value = element.features[i].feature;
-                                if (element.features[i].avaiable === true) {
-                                    let mavaiable_true =
-                                        document.getElementById(
-                                            `mavaiable_${i}_true`
-                                        );
-                                    mavaiable_true.checked = true;
-                                } else {
-                                    let mavaiable_false =
-                                        document.getElementById(
-                                            `mavaiable_${i}_false`
-                                        );
-                                    mavaiable_false.checked = true;
-                                }
-                            }
-                        }
-                    });
-                } catch (error) {
-                    console.log(error.message);
-                }
-            };
-
-            let edzestervModosit = async () => {
-                try {
-                    let id = document.getElementById('mplanId').value;
-                    let name = document.getElementById('mname').value;
-                    let desc = document.getElementById('mdescription').value;
-                    let price = document.getElementById('mprice').value;
-                    let features = [];
-
-                    for (let i = 0; i < 13; i++) {
-                        let feature = document.getElementById(
-                            `mfeature_${i}`
-                        ).value;
-                        let eldont = true;
-                        let igaz = document.getElementById(
-                            `mavaiable_${i}_true`
-                        );
-                        if (igaz.checked) {
-                            eldont = true;
-                        }
-                        let hamis = document.getElementById(
-                            `mavaiable_${i}_false`
-                        );
-                        if (hamis.checked) {
-                            eldont = false;
-                        }
-                        // console.log(eldont);
-                        features.push({ feature, avaiable: eldont });
-                    }
-
-                    const response = await fetch('/plan/modosit', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            id: id,
-                            name: name,
-                            desc: desc,
-                            price: price,
-                            features: features,
-                        }),
-                    });
-
-                    const adat = await response.json();
-                    console.log(adat);
-                } catch (error) {
-                    console.log(error.message);
-                }
-            };
-        </script>
-    </body>
+          const adat = await response.json();
+          console.log(adat);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+    </script>
+  </body>
 </html>

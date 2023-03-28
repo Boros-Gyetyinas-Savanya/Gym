@@ -1,48 +1,76 @@
 <!DOCTYPE html>
 <html lang="hu">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Kártyák</title>
-    </head>
-    <body>
-        <nav>
-            <li><a href="/">Főoldal</a></li>
-            <li><a href="/user/users">Sportolók</a></li>
-            <li><a href="/trainer/trainers">Edzők</a></li>
-            <li><a href="/program/programs">Programok</a></li>
-            <li><a href="/plan/plans">Edzéstervek</a></li>
-            <li><a href="/cart/carts">Kártyák</a></li>
-        </nav>
-        <h1>Kártyák</h1>
-        <ul>
-            <% carts.forEach(element => { %>
-            <li>
-                <h1><%= element.nev %></h1>
-                <p><%= element.user.toString().split("'")[1] %></p>
-                <p><%= element.plan.toString().split("'")[1] %></p>
-                <p><%= element.trainer.toString().split("'")[3] %></p>
-                <button onclick="torol('<%= element._id %>')">Töröl</button>
-            </li>
-            <% }) %>
-        </ul>
-        <script>
-            let torol = async (id) => {
-                try {
-                    const response = await fetch('/cart/delete', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ id }),
-                    });
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../public/cart.css" />
+    <title>Kártyák</title>
+  </head>
+  <style>
+    body {
+      background-color: #119999;
+    }
+    li {
+      color: #dddddd;
+      text-decoration: none;
+    }
+    a {
+      color: yellow;
+      text-decoration: none;
+    }
+  </style>
+  <body>
+    <nav>
+      <li style="position: absolute; top: 10vh; left: 10vw">
+        <a href="/">Főoldal</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 20vw">
+        <a href="/user/users">Sportolók</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 30vw">
+        <a href="/trainer/trainers">Edzők</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 40vw">
+        <a href="/program/programs">Programok</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 50vw">
+        <a href="/plan/plans">Edzéstervek</a>
+      </li>
+      <li style="position: absolute; top: 10vh; left: 60vw">
+        <a href="/cart/carts">Kártyák</a>
+      </li>
+    </nav>
+    <div style="position: relative; top: 10vh">
+      <h1>Kártyák</h1>
+      <ul>
+        <% carts.forEach(element => { %>
+        <li>
+          <h1><%= element.nev %></h1>
+          <p><%= element.user.toString().split("'")[1] %></p>
+          <p><%= element.plan.toString().split("'")[1] %></p>
+          <p><%= element.trainer.toString().split("'")[3] %></p>
+          <button onclick="torol('<%= element._id %>')">Töröl</button>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+    <script>
+      let torol = async (id) => {
+        try {
+          const response = await fetch("/cart/delete", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          });
 
-                    const adat = await response.json();
-                    console.log(adat);
-                } catch (error) {
-                    console.log(error.message);
-                }
-            };
-        </script>
-    </body>
+          const adat = await response.json();
+          console.log(adat);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+    </script>
+  </body>
 </html>
