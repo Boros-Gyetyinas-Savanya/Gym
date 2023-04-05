@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edző</title>
+    <style>
+      body {
+        background-color: #119999;
+      }
+      li {
+        color: #dddddd;
+        text-decoration: none;
+      }
+      a {
+        color: yellow;
+        text-decoration: none;
+      }
+    </style>
   </head>
-  <style>
-    body {
-      background-color: #119999;
-    }
-    li {
-      color: #dddddd;
-      text-decoration: none;
-    }
-    a {
-      color: yellow;
-      text-decoration: none;
-    }
-  </style>
   <body>
     <nav>
       <li style="position: absolute; top: 10vh; left: 10vw">
@@ -77,10 +77,10 @@
     <script>
       let torol = async (id) => {
         try {
-          const response = await fetch("/trainer/delete", {
-            method: "POST",
+          const response = await fetch('/trainer/delete', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ id }),
           });
@@ -94,20 +94,20 @@
 
       let edzoFeltolt = async () => {
         try {
-          let name = document.getElementById("name").value;
-          let job = document.getElementById("job").value;
-          let image = document.getElementById("image").value;
+          let name = document.getElementById('name').value;
+          let job = document.getElementById('job').value;
+          let image = document.getElementById('image').value;
           let socials = [
-            "https://instagram.com/",
-            "https://twitter.com/",
-            "https://facebook.com/",
-            "https://linkedin.com/",
+            'https://instagram.com/',
+            'https://twitter.com/',
+            'https://facebook.com/',
+            'https://linkedin.com/',
           ];
 
-          const response = await fetch("/trainer", {
-            method: "POST",
+          const response = await fetch('/trainer', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               image: image,
@@ -126,22 +126,22 @@
 
       let modosit = (id) => {
         try {
-          let formModosit = document.getElementById("form-modosit");
-          formModosit.style.display = "block";
-
-          const adat = "<%- JSON.stringify(spori) %>";
+          let formModosit = document.getElementById('form-modosit');
+          formModosit.style.display = 'block';
+          console.log(id);
+          const adat = '<%- JSON.stringify(spori) %>';
           const spori = JSON.parse(adat);
-          console.log(spori);
+          console.log(adat);
 
           spori.forEach((element) => {
             if (element._id == id) {
-              let mtrainerId = document.getElementById("mtrainerId");
+              let mtrainerId = document.getElementById('mtrainerId');
               mtrainerId.value = element._id;
-              let mname = document.getElementById("mname");
+              let mname = document.getElementById('mname');
               mname.value = element.name;
-              let mjob = document.getElementById("mjob");
+              let mjob = document.getElementById('mjob');
               mjob.value = element.job;
-              let mimage = document.getElementById("mimage");
+              let mimage = document.getElementById('mimage');
               mimage.value = element.image;
             }
           });
@@ -152,15 +152,15 @@
 
       let edzoModosit = async () => {
         try {
-          let id = document.getElementById("mtrainerId").value;
-          let name = document.getElementById("mname").value;
-          let job = document.getElementById("mjob").value;
-          let image = document.getElementById("mimage").value;
+          let id = document.getElementById('mtrainerId').value;
+          let name = document.getElementById('mname').value;
+          let job = document.getElementById('mjob').value;
+          let image = document.getElementById('mimage').value;
 
-          const response = await fetch("/trainer/modosit", {
-            method: "POST",
+          const response = await fetch('/trainer/modosit', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               id: id,

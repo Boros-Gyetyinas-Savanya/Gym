@@ -127,11 +127,11 @@
     <script>
       let edzestervFeltolt = async () => {
         try {
-          let name = document.getElementById("name").value;
+          let name = document.getElementById('name').value;
           // console.log(name);
-          let desc = document.getElementById("description").value;
+          let desc = document.getElementById('description').value;
           // console.log(desc);
-          let price = document.getElementById("price").value;
+          let price = document.getElementById('price').value;
           // console.log(price);
           let features = [];
 
@@ -150,10 +150,10 @@
             features.push({ feature, avaiable: eldont });
           }
 
-          const response = await fetch("/plan", {
-            method: "POST",
+          const response = await fetch('/plan', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               name: name,
@@ -172,10 +172,10 @@
 
       let torol = async (id) => {
         try {
-          const response = await fetch("/plan/delete", {
-            method: "POST",
+          const response = await fetch('/plan/delete', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ id }),
           });
@@ -189,22 +189,22 @@
 
       let modosit = (id) => {
         try {
-          let formModosit = document.getElementById("form-modosit");
-          formModosit.style.display = "block";
+          let formModosit = document.getElementById('form-modosit');
+          formModosit.style.display = 'block';
 
-          const adat = "<%- JSON.stringify(tulajdonsagok) %>";
+          const adat = '<%- JSON.stringify(tulajdonsagok) %>';
           const tulajdonsagok = JSON.parse(adat);
           // console.log(tulajdonsagok);
 
           tulajdonsagok.forEach((element) => {
             if (element._id == id) {
-              let mplanId = document.getElementById("mplanId");
+              let mplanId = document.getElementById('mplanId');
               mplanId.value = element._id;
-              let mname = document.getElementById("mname");
+              let mname = document.getElementById('mname');
               mname.value = element.name;
-              let mdescription = document.getElementById("mdescription");
+              let mdescription = document.getElementById('mdescription');
               mdescription.value = element.desc;
-              let mprice = document.getElementById("mprice");
+              let mprice = document.getElementById('mprice');
               mprice.value = element.price;
               for (let i = 0; i < element.features.length; i++) {
                 let mfeature = document.getElementById(`mfeature_${i}`);
@@ -230,10 +230,10 @@
 
       let edzestervModosit = async () => {
         try {
-          let id = document.getElementById("mplanId").value;
-          let name = document.getElementById("mname").value;
-          let desc = document.getElementById("mdescription").value;
-          let price = document.getElementById("mprice").value;
+          let id = document.getElementById('mplanId').value;
+          let name = document.getElementById('mname').value;
+          let desc = document.getElementById('mdescription').value;
+          let price = document.getElementById('mprice').value;
           let features = [];
 
           for (let i = 0; i < 13; i++) {
@@ -251,10 +251,10 @@
             features.push({ feature, avaiable: eldont });
           }
 
-          const response = await fetch("/plan/modosit", {
-            method: "POST",
+          const response = await fetch('/plan/modosit', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               id: id,

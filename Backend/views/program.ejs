@@ -86,16 +86,16 @@
     <script>
       let programFeltolt = async () => {
         try {
-          let programId = document.getElementById("programId").value;
-          let icon = document.getElementById("icon").value;
-          let title = document.getElementById("title").value;
-          let info = document.getElementById("info").value;
-          let path = document.getElementById("path").value;
+          let programId = document.getElementById('programId').value;
+          let icon = document.getElementById('icon').value;
+          let title = document.getElementById('title').value;
+          let info = document.getElementById('info').value;
+          let path = document.getElementById('path').value;
 
-          const response = await fetch("/program", {
-            method: "POST",
+          const response = await fetch('/program', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               id: programId,
@@ -115,10 +115,10 @@
 
       let torol = async (id) => {
         try {
-          const response = await fetch("/program/delete", {
-            method: "POST",
+          const response = await fetch('/program/delete', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ id }),
           });
@@ -132,24 +132,24 @@
 
       let modosit = (id) => {
         try {
-          let formModosit = document.getElementById("form-modosit");
-          formModosit.style.display = "block";
+          let formModosit = document.getElementById('form-modosit');
+          formModosit.style.display = 'block';
 
-          const adat = "<%- JSON.stringify(programs) %>";
+          const adat = '<%- JSON.stringify(programs) %>';
           const programs = JSON.parse(adat);
           console.log(programs);
 
           programs.forEach((element) => {
             if (element._id == id) {
-              let mprogramId = document.getElementById("mprogramId");
+              let mprogramId = document.getElementById('mprogramId');
               mprogramId.value = element.id;
-              let micon = document.getElementById("micon");
+              let micon = document.getElementById('micon');
               micon.value = element.icon;
-              let mtitle = document.getElementById("mtitle");
+              let mtitle = document.getElementById('mtitle');
               mtitle.value = element.title;
-              let minfo = document.getElementById("minfo");
+              let minfo = document.getElementById('minfo');
               minfo.value = element.info;
-              let mpath = document.getElementById("mpath");
+              let mpath = document.getElementById('mpath');
               mpath.value = element.path;
             }
           });
@@ -160,16 +160,16 @@
 
       let programModosit = async () => {
         try {
-          let id = document.getElementById("mprogramId").value;
-          let icon = document.getElementById("micon").value;
-          let title = document.getElementById("mtitle").value;
-          let info = document.getElementById("minfo").value;
-          let path = document.getElementById("mpath").value;
+          let id = document.getElementById('mprogramId').value;
+          let icon = document.getElementById('micon').value;
+          let title = document.getElementById('mtitle').value;
+          let info = document.getElementById('minfo').value;
+          let path = document.getElementById('mpath').value;
 
-          const response = await fetch("/program/modosit", {
-            method: "POST",
+          const response = await fetch('/program/modosit', {
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               id: id,
